@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!--
+    Name: Kameryn Larkins
+    Course:543
+    Assignment: #2
+-->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Calendar</title>
+</head>
+<body style="background-color: #9999ff;">
+
+    <p id="next" style="font-style: italic; font-size: 50px; padding: 90px; text-align: center;" onclick="years_table();">Click Me!</p>
+
+    <script language="JavaScript">
+        function getCols() { //function for returning the number of columns
+            return this.cols;
+        }
+
+        function setCols(c) { //function to set the number of columns in a table
+            this.cols = c;
+        }
+
+        function add(el) { //function for adding elements to a table
+            this.tArray[this.tArray.length] = el;
+        }
+
+        function print() { //function for printing the table
+            var mywin = window.open("", "win1", "resizeable, height=400px, width=300px"); //open new window
+            mywin.document.write("<!doctype html><html><head><title>");
+            mywin.next = this.next; //makes the next function accessible in the window
+            mywin.document.write(this.caption);
+            mywin.document.write("</title></head>");
+            mywin.document.write("<body style='background-color: #9999ff;'>");
+            mywin.document.write("<table id='years' style='position: fixed; left: 15px; border: 3px solid blue; height: 275px; width: 275px;'>"); //create html table
+            mywin.document.write("<tr><th colspan='" + this.cols + "' style='font-style: italic; font-weight: bold; font-family: Arial; background-color: #ccccff; font-size: 20px;'>"); //set the number of columns
+            mywin.document.write(this.caption); //set the caption of the table
+            mywin.document.write("</th></tr>");
+            mywin.document.write("<tr>");
+
+            //print table by data cell
+            var cc = 0; //column counter
+            for (var i = 0; i < this.tArray.length; i++) { //loop through tArray while i is less than the length of tArray
+                cc++; //add 1 to column counter
+                mywin.document.write("<td style='font-style: italic; font-weight: bold; font-family: Arial; text-align: center;' onclick='next(" + this.tArray[i] + ");'>" + this.tArray[i] + "</td>"); //create a table cell for each element in tArray
+                if (cc == this.cols) { //reset the column counter if it is equal to the number of columns
+                    cc = 0;
+                    mywin.document.write("</tr><tr>");
+                }
+            }
+            for (var i = cc; i < this.cols; i++) { //add empty cells if no other elements remain in array
+                mywin.document.write("<td>&nbsp;</td>");
+            }
+
+            mywin.document.write("</tr></table>"); //close final table row and table
+            mywin.document.write("<button onclick='window.close()' style='position: relative; left: 115px; top: 275px;'>close</button>"); //button to close window
+            mywin.document.write("</body></html>");
+            mywin.document.close();
+        }
+
+        //object constructor
+        function newTable(InArray, caption, cols, width, next) {
+            this.tArray = InArray;
+            this.caption = caption;
+            this.cols = cols;
+            this.width = width;
+            this.getCols = getCols;
+            this.setCols = setCols;
+            this.add = add;
+            this.print = print;
+            this.next = next;
+        }
+
+        //function to create new window
+        function years_table() {
+            //array of years to be displayed to user
+            var In = new Array("1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997",
+                "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010");
+            var table = new newTable(In, "Select a Year", 4, 300, months); //creates newTable object
+            table.print(); //prints the years table
+        }
+
+
+        //window for selection of months
+        function months(years) {
+            var monthWin = window.open("", "win2", "resizeable, height=400px, width=300px");
+            var months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December"); //list of months
+            monthWin.document.write("<!doctype html><html><head><title>Select Month</title></head>");
+            monthWin.years = years; //makes the selected year accessable in this window
+            monthWin.calendar = calendar; //makes the calendar function accessible in this window
+            monthWin.document.write("<body style='background-color: #9999ff;'>");
+            monthWin.document.write("<div style='position: fixed; width: 200px; height: 300px; border: 3px solid blue; left: 50px;'>"); //div for header
+            monthWin.document.write("<h2 style='padding: 5px; font-weight: bold; background-color: #ccccff; margin: 2px; font-style: italic; font-family: Arial; text-align: center;'>Select a Month</h2>");
+            monthWin.document.write("<select style='position: fixed; left: 100px; padding: 5px; border: 1px solid blue;' id='month'>");
+            for (var i = 0; i < months.length; i++) { //loops through and creates each option for the month selection menu
+                monthWin.document.write("<option onclick='calendar(" + years + "," + i + ");'>" + months[i] + "</option>");
+            } //saves the year and month selection and sends it to the calendar function
+            monthWin.document.write("</select>");
+            monthWin.document.write("</div>");
+            monthWin.document.write("<button onclick='window.close()' style='position: relative; left: 120px; top: 305px;'>close</button>"); //closes window when selected
+            monthWin.document.write("</body></html>");
+            monthWin.document.close();
+        }
+
+
+        //function that creates the array for calendar month
+        function calendar(year, month) { //accepts year and month as parameters
+            var d = new Date(); //creates new date
+            var years = d.setYear(year); //sets year to year selected by user
+            var months = d.setMonth(month); //sets month to month selected by user
+            var day = d.setDate(1); //sets the day to the first day of the month
+            var firstDay = d.getDay(); //determines which day of the week is the first day of the month
+            var lastDay = new Date(year, month + 1, 0).getDate(); //determines how many days in the month there are (either 28, 29, 30, or 31)
+            var calendarMonth = new Array("Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"); //create new array
+            //array containing months to display the proper month in the caption
+            var monthsTable = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September",
+                "October", "November", "December");
+            //creates variable to create the calendar month by calling the newTable object
+            var calendar = new newTable(calendarMonth, monthsTable[month] + " " + year, 7, 300, window.close);
+
+            for (var i = 0; i < firstDay; i++) { //loop through until the number of the week is reached
+                calendar.add(""); //add an empty space for each empty day using the add method
+            }
+
+            for (var i = 0; i < lastDay; i++) { //loop through until the last day of the month is reached
+                calendar.add(i + 1); //add each day of the month to the array using the add method
+            }
+
+            calendar.print(); //prints calendar month
+        }
+
+    </script>
+
+</body>
+</html>
