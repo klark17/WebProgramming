@@ -1,0 +1,16 @@
+.total, .total1, .total2, .total3 {
+    border: 2px solid black;
+    background-color: #b3d9ff;
+    margin: 5px;
+    width: 5em;
+    text-align: center;
+    height: 20px;
+}
+
+table {
+    margin-left: 40%;
+}
+
+p {
+    text-align: center;
+}
