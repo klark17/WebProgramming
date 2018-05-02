@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="jquery-3.3.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="Yahtzee.css">
+    <script src="Yahtzee.js"></script>
+    <title>Yahtzee</title>
+</head>
+<body>
+    <h1 style="text-align: center; font-family: Arial;">Yahtzee</h1>
+    <div style="text-align: center;">
+        <img src='dice0.gif' id="d0" class="d">
+        <img src='dice0.gif' id="d1" class="d">
+        <img src='dice0.gif' id="d2" class="d">
+        <img src='dice0.gif' id="d3" class="d">
+        <img src='dice0.gif' id="d4" class="d">
+    </div>
+
+    <table style="text-align: center;">
+        <tr>
+            <td class="outcome">1's</td> <!--class="outcome" for all numbers (1's, 2's, etc)-->
+            <td id="c1" class="total1"></td>
+            <td rowspan='7'><button class="roll" style="width: 4em;">Roll</button></td>
+        </tr>
+        <tr>
+            <td class="outcome">2's</td>
+            <td id="c2" class="total1"></td>
+        </tr>
+        <tr>
+            <td class="outcome">3's</td>
+            <td id="c3" class="total1"></td>
+        </tr>
+        <tr>
+            <td class="outcome">4's</td>
+            <td id="c4" class="total1"></td>
+        </tr>
+        <tr>
+            <td class="outcome">5's</td>
+            <td id="c5" class="total1"></td>
+        </tr>
+        <tr>
+            <td class="outcome">6's</td>
+            <td id="c6" class="total1"></td>
+        </tr>
+        <tr>
+            <td class="kind_3">3 of a kind</td>
+            <td id="kind3" class="total2"></td>
+        </tr>
+        <tr>
+            <td class="kind_4">4 of a kind</td>
+            <td id="kind4" class="total2"></td>
+            <td rowspan='7'><button id="restart">New Game</button></td>
+        </tr>
+        <tr>
+            <td class="outcome">Full House</td>
+            <td id="full" class="total"></td>
+        </tr>
+        <tr>
+            <td class="outcome">Sm Straight</td>
+            <td id="smallStr" class="total"></td>
+        </tr>
+        <tr>
+            <td class="outcome">Lg Straight</td>
+            <td id="largeStr" class="total"></td>
+        </tr>
+        <tr>
+            <td class="outcome">Yahtzee</td>
+            <td id="yahtzee" class="total"></td>
+        </tr>
+        <tr>
+            <td class="outcome">Chance</td>
+            <td id="chance" class="total"></td>
+        </tr>
+        <tr>
+            <td class="outcome">Total</td>
+            <td id="total" class="total3"></td>
+        </tr>
+    </table>
+    <p id="message"></p>
+</body>
+</html>
